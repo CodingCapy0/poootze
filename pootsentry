@@ -1,0 +1,25 @@
+import discord
+import random
+from discord.ext import commands
+import os
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def handmade(ctx):
+    handcrafst_mem=os.listdir("Handcrafst")
+    handcrafst_show=random.choice(handcrafst_mem)
+    with open(f'Handcrafst/{handcrafst_show}', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+@bot.command()
+async def how(ctx):
+    await ctx.send("with some creativity :D")
